@@ -18,7 +18,7 @@ int main(void){
 	int opcion=0, longi=0;
     float valor=0;
 	polinomio *pInicio= NULL;
-	cout<<"Ingrese la cantidad de nodos de la lista: "; cin>>longiPoli;
+	cout<<"Ingrese la cantidad de nodos (monomios) de la lista: "; cin>>longiPoli;
 	do{
 		imprimirMenu(); cin >> opcion;
 		cout<<endl;
@@ -85,7 +85,7 @@ void insertarMono(polinomio **pInicio){
 		posi++;
 		longiPoli--;
     }else{
-    	cout<<"Ha llenado el espacio disponible"<<endl;
+    	cout<<"Ha llenado el espacio disponible para ingresar monomios"<<endl;
     	return;
 	}
 }
