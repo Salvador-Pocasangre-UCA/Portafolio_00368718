@@ -15,6 +15,7 @@ struct listaDatos{
 //Funciones de lista
 void insertarDatos(listaDatos** pInicio);
 void imprimirDatos(listaDatos* lista, int contador);
+void eliminarNum(listaDatos** lista);
 void imprimirMenu(void);
 //Funciones de arbol
 nodo *crearnodo(int n);
@@ -29,9 +30,12 @@ nodo *arbol=NULL;
 int main(void) {
 	int opcion=0, busca=0, contador=0, n=0, conta=0;
 	listaDatos* pInicio = NULL;
+	listaDatos* s = pInicio;
+	
 	cout<<"ESTE PROGRAMA PERMITE CONSTRUIR UN ARBOL BINARIO DE BUSQUEDA A PARTIR"<<endl;
-	cout<<"DE UNA LISTA SIMPLEMENTE ENLAZADA, SE PUEDE VOLVER A INGRESAR DATOS DESPUES"<<endl;
-	cout<<"DE HABER CREADO EL ARBOL Y LOS NUEVOS DATOS SERAN GUARDADOS SIN REPETIR"<<endl<<endl;
+	cout<<"DE UNA LISTA SIMPLEMENTE ENLAZADA, NO SE PUEDE VOLVER A INGRESAR DATOS DESPUES"<<endl;
+	cout<<"DE HABER CREADO EL ARBOL YA QUE LA LISTA ENLAZADA SE IRA ELIMINANDO"<<endl;
+	cout<<"CODIGO DE: SALVADOR ALBERTO POCASANGRE"<<endl<<endl;
 	do{
 		imprimirMenu(); cin >> opcion;
 		cout<<endl;
@@ -46,12 +50,15 @@ int main(void) {
 			break;
 		case 3:
 			insertandoEnArbol(arbol, pInicio);
-			if(conta==0){
-				cout<<"Arbol CREADO exitosamente!"<<endl<<endl;
-			}else{
-				cout<<"Arbol ACTUALIZADO exitosamente!"<<endl<<endl;
-			}
-			conta++;
+			cout<<"Arbol CREADO exitosamente!"<<endl<<endl;
+			
+    		while(pInicio != NULL){
+        		s = pInicio;
+        		pInicio = pInicio->sig;
+        		delete(s);
+    		}
+    		
+			pInicio=NULL;
 			break;
 		case 4:
 		    cout<<"MOSTRANDO ARBOL COMPLETO."<<endl<<endl;
@@ -83,7 +90,7 @@ void imprimirMenu(void) {
 	cout << "MENU PRINCIPAL" << endl << endl;
 	cout << "1. Introducir datos (numeros enteros) a lista simple. . ." << endl;
 	cout << "2. Mostrar datos en lista simple. . ." << endl;
-	cout << "3. Crear/Actualizar Arbol a partir de lista simple. . ." << endl;
+	cout << "3. Crear/Actualizar Arbol a partir de lista simple(esta opcion eliminara datos en Lista Simple). . ." << endl;
 	cout << "4. Mostrar Arbol. . ." << endl;
 	cout << "0. Salir   Su opcion: ";
 }
@@ -103,6 +110,12 @@ void insertarDatos(listaDatos** pInicio) {
 
 		aux->sig = nuevo;
 	}
+}
+
+void eliminarNum(listaDatos** lista) {
+	if (*lista) {
+			*lista = (*(*lista)).sig;
+		}
 }
 
 //Funciones de arbol
@@ -142,12 +155,8 @@ void insertandoEnArbol(nodo *&arbol, listaDatos* lista){
 	if(!lista)
 		return;
 	else{
-		if(busquedaEnArbol(arbol, lista->num)){
-			insertandoEnArbol(arbol, lista->sig);
-		}else{
-			insertar(arbol, lista->num);
+		insertar(arbol, lista->num );
 		insertandoEnArbol(arbol, lista->sig);
-		}		 
 	}	
 }
 
